@@ -12,17 +12,18 @@ public class Kitchen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
     }
 
     public void goToGym(View view) {
         Intent intent = new Intent(this, Gym.class);
         startActivity(intent);
-        finish();
     }
 
     public void goToBedroom(View view) {
         Intent intent = new Intent(this, Bedroom.class);
         startActivity(intent);
-        finish();
     }
 }

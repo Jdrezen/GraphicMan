@@ -15,8 +15,6 @@ public class Gym extends AppCompatActivity {
     }
 
     public void goToKitchen(View view) {
-        Intent intent = new Intent(this, Kitchen.class);
-        startActivity(intent);
         finish();
     }
 }
