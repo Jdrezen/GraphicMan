@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.131" />
 
     <TextView
         android:id="@+id/light_level_text"
@@ -26,4 +26,18 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="143dp" />
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="383dp"
+        android:layout_height="71dp"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <SurfaceView
+        android:id="@+id/surfaceView2"
+        android:layout_width="387dp"
+        android:layout_height="563dp"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="151dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
