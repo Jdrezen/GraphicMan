@@ -32,7 +32,6 @@ public class GameThread extends Thread {
         public void run() {
             if (gameView.isRunning()) {
                 try {
-                    Log.d("rundraw", "threadLog");
                     canvas = surfaceHolder.lockCanvas();
                     synchronized (surfaceHolder) {
                         gameView.draw(canvas);
