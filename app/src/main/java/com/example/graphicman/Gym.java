@@ -11,22 +11,21 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Gym implements SensorEventListener {
     private SensorManager sensorManager;
-    private TextView xText, y, z;
-    boolean shaking;
     int height, width;
-    int lastAnimation = 2;
+    float testVibration;
+    Queue<PullUpPose> animationFrames = new LinkedList<PullUpPose>();
 
     public Gym(SensorManager sensorManager, int height, int width) {
         this.sensorManager = sensorManager;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         this.height = height;
         this.width = width;
-    }
-
-    public void setSensorManager(SensorManager sensorManager){
-        this.sensorManager = sensorManager;
+        this.animationFrames.add(PullUpPose.DOWN);
     }
 
     @Override
@@ -47,10 +46,26 @@ public class Gym implements SensorEventListener {
         // gForce will be close to 1 when there is no movement
         float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
 
-        if (gForce > 1.2) {
-            shaking = true;
-        } else{
-            shaking = false;
+        //Random pour tester
+        gForce = (float) (Math.random() * 10);
+
+        if(gForce > 3){
+            addAnimationFrames(1);
+        }
+        else if(2 < gForce && gForce < 3){
+            addAnimationFrames(3);
+        }
+        else if(1.2 < gForce && gForce < 2){
+            addAnimationFrames(5);
+        }
+        testVibration = gForce;
+    }
+
+    public void addAnimationFrames(int number){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < number; j++) {
+                animationFrames.add(PullUpPose.values()[i]);
+            }
         }
     }
 
@@ -59,7 +74,9 @@ public class Gym implements SensorEventListener {
         Paint paint = new Paint();
         paint.setColor(Color.rgb(125, 125, 125));
         paint.setTextSize(300);
-        canvas.drawText(shaking +"", 100, 100, paint);
+
+        //GForce
+        canvas.drawText( testVibration+"", 100, 200, paint);
 
         //Barre transversale
         canvas.drawRect(100,600,width - 100,650,paint);
@@ -70,27 +87,22 @@ public class Gym implements SensorEventListener {
         //Barre de droite
         canvas.drawRect(width - 200,600,width - 150,height - 200,paint);
 
-        shaking = true;
-
-        if(shaking){
-            switch (lastAnimation){
-                case 0:
-                    drawFirstPose(paint, canvas);
-                    lastAnimation = 1;
-                    break;
-
-                case 1:
-                    drawSecondPose(paint, canvas);
-                    lastAnimation = 2;
-                    break;
-
-                case 2:
-                    drawThirddPose(paint, canvas);
-                    lastAnimation = 0;
-            }
+        if (animationFrames.isEmpty()){
+            animationFrames.add(PullUpPose.DOWN);
         }
-        else {
-            drawFirstPose(paint, canvas);
+
+        switch (animationFrames.poll()){
+            case DOWN:
+                drawFirstPose(paint, canvas);
+                break;
+
+            case MID:
+                drawSecondPose(paint, canvas);
+                break;
+
+            case UP:
+                drawThirddPose(paint, canvas);
+                break;
         }
     }
 
