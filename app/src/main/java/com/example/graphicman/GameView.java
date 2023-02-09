@@ -37,7 +37,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         gym = new Gym(sensorManager, displayMetrics.heightPixels, displayMetrics.widthPixels);
-        lifebars = new LifeBars(context,10,10,100,displayMetrics.heightPixels, displayMetrics.widthPixels, BitmapFactory.decodeResource(getResources(), R.drawable.heart));
+        lifebars = new LifeBars(context,10,10,100,displayMetrics.heightPixels, displayMetrics.widthPixels);
         getHolder().addCallback(this);
         thread = new GameThread(getHolder(), this);
     }

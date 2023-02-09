@@ -22,12 +22,11 @@ public class LifeBars {
     private int y = 100;
     private float ratio = 10;
 
-    private Bitmap heartImage;
 
     private int barLength = 0;
     private int barWidth = 0;
 
-    public LifeBars(Context context, int food, int energy, int health, int height, int width, Bitmap heartImage) {
+    public LifeBars(Context context, int food, int energy, int health, int height, int width) {
         this.food = food;
         this.energy = energy;
         this.health = health;
@@ -36,9 +35,6 @@ public class LifeBars {
         this.barLength = (int) (width*0.85);
         this.barWidth = (int) (height*0.02);
         this.ratio = ((float)(barLength-5)) /100;
-
-
-                this.heartImage = heartImage;
     }
 
     public void addFood(int value){
