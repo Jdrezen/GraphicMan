@@ -19,6 +19,7 @@ public class Gym implements SensorEventListener {
     int height, width;
     float testVibration;
     Queue<PullUpPose> animationFrames = new LinkedList<PullUpPose>();
+    float max;
 
     public Gym(SensorManager sensorManager, int height, int width) {
         this.sensorManager = sensorManager;
@@ -34,31 +35,37 @@ public class Gym implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // check if the device is shaking
-        float x = event.values[0];
-        float y = event.values[1];
-        float z = event.values[2];
+        if(animationFrames.isEmpty() && max > 1.2) {
 
-        float gX = x / SensorManager.GRAVITY_EARTH;
-        float gY = y / SensorManager.GRAVITY_EARTH;
-        float gZ = z / SensorManager.GRAVITY_EARTH;
-
-        // gForce will be close to 1 when there is no movement
-        float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
-
-        //Random pour tester
-        gForce = (float) (Math.random() * 10);
-
-        if(gForce > 3){
-            addAnimationFrames(1);
+            if(max > 3){
+                addAnimationFrames(1);
+            }
+            else if(2 < max && max < 3){
+                addAnimationFrames(3);
+            }
+            else if(1.2 < max && max < 2){
+                addAnimationFrames(5);
+            }
+            max = 0;
+            testVibration = max;
         }
-        else if(2 < gForce && gForce < 3){
-            addAnimationFrames(3);
+        else{
+            // check if the device is shaking
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            float gX = x / SensorManager.GRAVITY_EARTH;
+            float gY = y / SensorManager.GRAVITY_EARTH;
+            float gZ = z / SensorManager.GRAVITY_EARTH;
+
+            // gForce will be close to 1 when there is no movement
+            float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
+
+            //Random pour tester
+            //float gForce = (float) (Math.random() * 10);
+            max = gForce > max ? gForce : max;
         }
-        else if(1.2 < gForce && gForce < 2){
-            addAnimationFrames(5);
-        }
-        testVibration = gForce;
     }
 
     public void addAnimationFrames(int number){
@@ -101,7 +108,7 @@ public class Gym implements SensorEventListener {
                 break;
 
             case UP:
-                drawThirddPose(paint, canvas);
+                drawThirdPose(paint, canvas);
                 break;
         }
     }
@@ -148,7 +155,7 @@ public class Gym implements SensorEventListener {
 
     }
 
-    public void drawThirddPose(Paint paint, Canvas canvas){
+    public void drawThirdPose(Paint paint, Canvas canvas){
         paint.setColor(Color.rgb(0, 0, 0));
         paint.setStrokeWidth(50);
 
