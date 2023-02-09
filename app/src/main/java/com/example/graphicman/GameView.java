@@ -14,6 +14,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -25,6 +26,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private SensorManager sensorManager;
     private Gym gym;
     private LifeBars lifebars;
+    private Button button;
+    private int screenHeight;
+    private int screenWidth;
+    private EState state;
 
     public boolean isRunning() {
         return running;
@@ -33,11 +38,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public GameView(Context context, SensorManager sensorManager) {
         super(context);
+        state = EState.KITCHEN;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenHeight = displayMetrics.heightPixels;
+        screenWidth = displayMetrics.widthPixels;
+
         gym = new Gym(sensorManager, displayMetrics.heightPixels, displayMetrics.widthPixels);
         lifebars = new LifeBars(context,10,10,100,displayMetrics.heightPixels, displayMetrics.widthPixels);
+        button = new Button(screenHeight, screenWidth);
+
         getHolder().addCallback(this);
         thread = new GameThread(getHolder(), this);
     }
@@ -70,11 +81,24 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (canvas != null) {
-            canvas.drawColor(Color.WHITE);
-            gym.draw(canvas);
-            lifebars.draw(canvas);
+        canvas.drawColor(Color.WHITE);
+        button.draw(canvas, state);
+        lifebars.draw(canvas);
+
+
+        switch (state) {
+            case GYM:
+                gym.draw(canvas);
+                break;
+            case BEDROOM:
+                break;
+            case KITCHEN:
+                break;
         }
+    }
+
+    public void onTouch(MotionEvent motionEvent) {
+        state = button.buttonTouch(motionEvent, state);
     }
 
 }

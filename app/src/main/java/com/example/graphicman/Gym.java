@@ -77,7 +77,7 @@ public class Gym implements SensorEventListener {
     }
 
     public void draw(Canvas canvas){
-        canvas.drawColor(Color.WHITE);
+//        canvas.drawColor(Color.WHITE);
         Paint paint = new Paint();
         paint.setColor(Color.rgb(125, 125, 125));
         paint.setTextSize(300);

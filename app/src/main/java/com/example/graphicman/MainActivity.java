@@ -8,10 +8,12 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
     private GameView gameView;
 
     @Override
@@ -25,7 +27,15 @@ public class MainActivity extends AppCompatActivity {
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         gameView = new GameView(this, sensorManager);
 
+        gameView.setOnTouchListener(this);
+
         setContentView(gameView);
 
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        gameView.onTouch(motionEvent);
+        return false;
     }
 }

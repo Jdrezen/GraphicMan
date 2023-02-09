@@ -1,6 +1,6 @@
 package com.example.graphicman;
 
-public enum STATE {
+public enum EState {
     KITCHEN,
     BEDROOM,
     GYM
