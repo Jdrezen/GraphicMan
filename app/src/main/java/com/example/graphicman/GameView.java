@@ -1,7 +1,10 @@
 package com.example.graphicman;
 
+
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,6 +24,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private boolean running = true;
     private SensorManager sensorManager;
     private Gym gym;
+    private LifeBars lifebars;
 
     public boolean isRunning() {
         return running;
@@ -33,6 +37,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         gym = new Gym(sensorManager, displayMetrics.heightPixels, displayMetrics.widthPixels);
+        lifebars = new LifeBars(context,10,10,100,displayMetrics.heightPixels, displayMetrics.widthPixels, BitmapFactory.decodeResource(getResources(), R.drawable.heart));
         getHolder().addCallback(this);
         thread = new GameThread(getHolder(), this);
     }
@@ -65,7 +70,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        gym.draw(canvas);
+        if (canvas != null) {
+            canvas.drawColor(Color.WHITE);
+            gym.draw(canvas);
+            lifebars.draw(canvas);
+        }
     }
 
 }
