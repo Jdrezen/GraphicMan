@@ -160,7 +160,7 @@ public class LifeBars {
         Paint backGroundPaint = new Paint();
         backGroundPaint.setColor(Color.rgb(192,192,192));
 
-        canvas.drawRect(0, 0, width, height/5, backGroundPaint);
+        canvas.drawRect(0, 0, width, 430, backGroundPaint);
 
         drawPoulew(canvas);
         drawEnergy(canvas);
