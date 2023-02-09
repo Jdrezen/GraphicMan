@@ -76,6 +76,12 @@ public class LifeBars {
     }
 
     public void draw(Canvas canvas) {
+        Paint backGroundPaint = new Paint();
+        backGroundPaint.setColor(Color.rgb(192,192,192));
+
+        canvas.drawRect(0, 0, width, height/5, backGroundPaint);
+
+
         x = 100;
         y = 100;
 
