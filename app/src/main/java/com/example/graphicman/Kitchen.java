@@ -23,7 +23,7 @@ public class Kitchen extends AppCompatActivity {
     }
 
     public void goToBedroom(View view) {
-        Intent intent = new Intent(this, Bedroom.class);
+        Intent intent = new Intent(this, BedroomDeprecated.class);
         startActivity(intent);
     }
 }
