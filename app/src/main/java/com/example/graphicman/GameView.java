@@ -83,8 +83,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super.draw(canvas);
         if (canvas != null) {
             canvas.drawColor(Color.WHITE);
-            lifebars.draw(canvas);
-            button.draw(canvas, state);
             switch (state) {
                 case GYM:
                     gym.draw(canvas);
@@ -94,6 +92,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 case KITCHEN:
                     break;
             }
+            lifebars.draw(canvas);
+            button.draw(canvas, state);
         }
     }
 
