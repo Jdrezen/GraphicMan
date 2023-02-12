@@ -64,6 +64,7 @@ public class Gym implements SensorEventListener {
 
             //Random pour tester
             //float gForce = (float) (Math.random() * 10);
+
             max = gForce > max ? gForce : max;
         }
     }
