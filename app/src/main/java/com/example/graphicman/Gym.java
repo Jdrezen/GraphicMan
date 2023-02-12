@@ -1,5 +1,7 @@
 package com.example.graphicman;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,11 +19,13 @@ import java.util.Queue;
 public class Gym implements SensorEventListener {
     private int height, width;
     private float max;
+    private Activity mother;
     private Queue<PullUpPose> animationFrames = new LinkedList<PullUpPose>();
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
 
-    public Gym(SensorManager sensorManager, int height, int width) {
+    public Gym(Activity mother,SensorManager sensorManager, int height, int width) {
+        this.mother = mother;
         this.sensorManager = sensorManager;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         this.height = height;
@@ -78,6 +82,14 @@ public class Gym implements SensorEventListener {
     }
 
     public void draw(Canvas canvas){
+        //TODO Trouver un moyen de lancer le score activity de manière propre
+        // Dans le cas présent il est appelé en boucle
+        //Pour tester l'affichage du score
+        Intent intent = new Intent(mother, ScoreActivity.class);
+        intent.putExtra("score", 15);
+        mother.startActivity(intent);
+
+
         canvasWrapper.setCanvas(canvas);
         canvas.drawColor(Color.WHITE);
         Paint paint = new Paint();
