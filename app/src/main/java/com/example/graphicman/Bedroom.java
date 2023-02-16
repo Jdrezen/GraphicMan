@@ -8,7 +8,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.util.Log;
 
 
@@ -19,41 +18,46 @@ public class Bedroom implements SensorEventListener {
     private int barWidth;
     private Sensor lightSensor;
     private int lightValue;
+    private CanvasWrapper canvasWrapper;
 
     public Bedroom(SensorManager sensorManager, int height, int width) {
         this.height = height;
         this.width = width;
-        this.barWidth = (int) (height * 0.02);
+        this.barWidth = (int) (2154 * 0.02);
         this.sensorManager = sensorManager;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), SensorManager.SENSOR_DELAY_NORMAL);
         this.lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        this.canvasWrapper = new CanvasWrapper(width, height);
     }
 
     public void draw(Canvas canvas) {
 
-
+        canvasWrapper.setCanvas(canvas);
         Paint backPaint = new Paint();
         backPaint.setColor(Color.rgb(128,128,128));
 
         Paint yellowPaint = new Paint();
         yellowPaint.setColor(Color.rgb(250, 250, 0));
 
-        int barHeight = (height * 3/4 - 5) - (height * 1/4 + 35);
+        int barHeight = (2154 * 3/4 - 5) - (2154 * 1/4 + 35);
         // border
-        canvas.drawRect(width - 50, height * 1/4 + 30, width - 50 + barWidth, height * 3/4, backPaint);
+        canvasWrapper.drawRect(1080 - 80,  700, 1080 - 80 + barWidth, 2154 * 3/4 + 200, backPaint);
         // bar
-        canvas.drawRect(width - 45, height * 3/4 - 5 - barHeight * lightValue / 100, width - 55 + barWidth, height * 3/4 - 5, yellowPaint);
+        canvasWrapper.drawRect(1080 - 95, 2154 * 3/4 - 5 - barHeight * lightValue / 100, 1080 - 105 + barWidth, 2154 * 3/4 - 5, yellowPaint);
 
-
+        Paint redPaint = new Paint();
+        redPaint.setColor(Color.RED);
+        // selecter
+        canvasWrapper.drawRect(1080 - 100, 1400, 1080 - 20, 1405, redPaint);
         // sun
-        canvas.drawCircle(width - 60, height * 1/4 - 25, 20, yellowPaint);
-        canvas.drawCircle(width - 20, height * 1/4 - 50, 10, yellowPaint);
-        canvas.drawCircle(width - 100, height * 1/4 - 50, 10, yellowPaint);
-        canvas.drawCircle(width - 100, height * 1/4 - 0, 10, yellowPaint);
-        canvas.drawCircle(width - 20, height * 1/4 - 0, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 60, 2154/4 + 55, 20, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 20, 2154 * 1/4 - 50, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 100, 2154 * 1/4 - 50, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 100, 2154 * 1/4 - 0, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 20, 2154 * 1/4 - 0, 10, yellowPaint);
 
-        canvas.drawCircle(width - 60, height * 1/4 - 70, 10, yellowPaint);
-        canvas.drawCircle(width - 60, height * 1/4 + 20, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 60, 2154 * 1/4 - 70, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 60, 2154 * 1/4 + 20, 10, yellowPaint);
 
     }
 
@@ -75,6 +79,6 @@ public class Bedroom implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
+        // unused
     }
 }
