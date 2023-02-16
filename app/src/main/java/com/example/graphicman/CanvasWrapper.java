@@ -9,8 +9,8 @@ public class CanvasWrapper {
     private float widthRatio;
     private float heightRatio;
     public CanvasWrapper(int width, int height){
-        this.widthRatio = width/1000f;
-        this.heightRatio = height/1000f;
+        this.widthRatio = width/1080f;
+        this.heightRatio = height/2154f;
     }
 
     public void setCanvas(Canvas canvas){
