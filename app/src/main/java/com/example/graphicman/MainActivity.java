@@ -8,12 +8,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener,View.OnDragListener {
     private GameView gameView;
 
     @Override
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         gameView = new GameView(this, sensorManager);
 
         gameView.setOnTouchListener(this);
+        gameView.setOnDragListener(this);
 
         setContentView(gameView);
 
@@ -36,6 +38,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         gameView.onTouch(motionEvent);
+        return false;
+    }
+
+    @Override
+    public boolean onDrag(View view, DragEvent dragEvent) {
+        gameView.onDrag(dragEvent);
         return false;
     }
 }
