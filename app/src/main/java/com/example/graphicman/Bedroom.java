@@ -41,6 +41,8 @@ public class Bedroom implements SensorEventListener {
         canvas.drawRect(width - 50, height * 1/4 + 30, width - 50 + barWidth, height * 3/4, backPaint);
         canvas.drawRect(width - 45, height * 1/4 + 35, width - 55 + barWidth, height * 3/4 - 5, yellowPaint);
 
+
+        // sun
         canvas.drawCircle(width - 60, height * 1/4 - 25, 20, yellowPaint);
         canvas.drawCircle(width - 20, height * 1/4 - 50, 10, yellowPaint);
         canvas.drawCircle(width - 100, height * 1/4 - 50, 10, yellowPaint);
@@ -55,7 +57,7 @@ public class Bedroom implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
+//        sensorEvent.
     }
 
     @Override

@@ -99,6 +99,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     gym.draw(canvas);
                     break;
                 case BEDROOM:
+                    bedroom.draw(canvas);
                     break;
                 case KITCHEN:
                     break;
