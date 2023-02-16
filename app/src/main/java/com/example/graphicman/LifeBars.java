@@ -19,6 +19,7 @@ public class LifeBars {
     private int height;
     private int width;
     private float ratio = 10;
+    private CanvasWrapper canvasWrapper;
 
 
     private int barLength = 0;
@@ -30,9 +31,10 @@ public class LifeBars {
         this.health = health;
         this.height = height;
         this.width = width;
-        this.barLength = (int) (width*0.85);
-        this.barWidth = (int) (height*0.02);
+        this.barLength = 920;
+        this.barWidth = 45;
         this.ratio = ((float)(barLength-5)) /100;
+        this.canvasWrapper = new CanvasWrapper(width,height);
     }
 
     public void addFood(int value){
@@ -73,7 +75,7 @@ public class LifeBars {
         this.health -=value;
     }
 
-    public void drawPoulew(Canvas canvas){
+    public void drawPoulew(CanvasWrapper canvasWrapper){
         int x = 20;
         int y = 325;
 
@@ -82,55 +84,40 @@ public class LifeBars {
         Paint wightPaint = new Paint();
         wightPaint.setColor(Color.rgb(255,255,255));
         //os
-        canvas.drawRect(x+18, y, x+32, y+80,  wightPaint);
+        canvasWrapper.drawRect(x+18, y, x+32, y+80,  wightPaint);
         y+=15;
         //meet
-        canvas.drawRect(x, y, x+50, y+50, brownPaint);
+        canvasWrapper.drawRect(x, y, x+50, y+50, brownPaint);
     }
-    public void drawEnergy(Canvas canvas){
+    public void drawEnergy(CanvasWrapper canvasWrapper){
         int x = 20;
         int y = 250;
 
         Paint bluePaint = new Paint();
         bluePaint.setColor(Color.rgb(0,128,255));
-        canvas.drawRect(x+15, y-5, x+30, y, bluePaint);
+        canvasWrapper.drawRect(x+15, y-5, x+30, y, bluePaint);
 
-        canvas.drawRect(x, y, x+50, y+15, bluePaint);
+        canvasWrapper.drawRect(x, y, x+50, y+15, bluePaint);
         y+=20;
-        canvas.drawRect(x, y, x+50, y+15, bluePaint);
+        canvasWrapper.drawRect(x, y, x+50, y+15, bluePaint);
         y+=20;
-        canvas.drawRect(x, y, x+50, y+15, bluePaint);
+        canvasWrapper.drawRect(x, y, x+50, y+15, bluePaint);
     }
-    public void drawEarth(Canvas canvas){
-        int x = 20;
-        int y = 170;
 
-        Paint redPaint = new Paint();
-        redPaint.setColor(Color.rgb(204,0,0));
-
-        canvas.drawRect(x+5, y, x+15, y+10, redPaint);
-        canvas.drawRect(x+35, y, x+45, y+10, redPaint);
-        y+=10;
-        canvas.drawRect(x, y, x+55, y+15, redPaint);
-        y+=15;
-        canvas.drawRect(x+5, y, x+45, y+15, redPaint);
-        y+=15;
-        canvas.drawRect(x+17, y, x+33, y+10, redPaint);
-    }
-    public void drawCross(Canvas canvas) {
+    public void drawCross(CanvasWrapper canvasWrapper) {
         int x = 20;
         int y = 170;
 
         Paint redPaint = new Paint();
         redPaint.setColor(Color.rgb(204, 0, 0));
 
-        canvas.drawRect(x+15, y, x + 35, y+50, redPaint);
+        canvasWrapper.drawRect(x+15, y, x + 35, y+50, redPaint);
         y+=16;
-        canvas.drawRect(x, y, x + 50, y + 20, redPaint);
+        canvasWrapper.drawRect(x, y, x + 50, y + 20, redPaint);
     }
 
 
-    public void drawBars(Canvas canvas){
+    public void drawBars(CanvasWrapper canvasWrapper){
         int x = 100;
         int y = 200;
 
@@ -146,27 +133,27 @@ public class LifeBars {
         Paint bluePaint = new Paint();
         bluePaint.setColor(Color.rgb(0, 102, 204));
 
-        canvas.drawRect(x, y, x+barLength, y+barWidth, backPaint);
-        canvas.drawRect(x+5, y+5, x+(int)(health*ratio), y+barWidth-5, redPaint);
+        canvasWrapper.drawRect(x, y, x+barLength, y+barWidth, backPaint);
+        canvasWrapper.drawRect(x+5, y+5, x+(int)(health*ratio), y+barWidth-5, redPaint);
         y = y+70;
-        canvas.drawRect(x, y, x+barLength, y+barWidth, backPaint);
-        canvas.drawRect(x+5, y+5,  x+(int)(energy*ratio), y+barWidth-5, bluePaint);
+        canvasWrapper.drawRect(x, y, x+barLength, y+barWidth, backPaint);
+        canvasWrapper.drawRect(x+5, y+5,  x+(int)(energy*ratio), y+barWidth-5, bluePaint);
         y = y+70;
-        canvas.drawRect(x, y, x+barLength, y+barWidth, backPaint);
-        canvas.drawRect(x+5, y+5,  x+(int)(food*ratio), y+barWidth-5, greenPaint);
+        canvasWrapper.drawRect(x, y, x+barLength, y+barWidth, backPaint);
+        canvasWrapper.drawRect(x+5, y+5,  x+(int)(food*ratio), y+barWidth-5, greenPaint);
     }
 
     public void draw(Canvas canvas) {
         Paint backGroundPaint = new Paint();
         backGroundPaint.setColor(Color.rgb(192,192,192));
 
-        canvas.drawRect(0, 0, width, 430, backGroundPaint);
+        canvasWrapper.setCanvas(canvas);
+        canvasWrapper.drawRect(0, 0, 1080, 430, backGroundPaint);
 
-        drawPoulew(canvas);
-        drawEnergy(canvas);
-//        drawEarth(canvas);
-        drawBars(canvas);
-        drawCross(canvas);
+        drawPoulew(canvasWrapper);
+        drawEnergy(canvasWrapper);
+        drawBars(canvasWrapper);
+        drawCross(canvasWrapper);
 
 
 
