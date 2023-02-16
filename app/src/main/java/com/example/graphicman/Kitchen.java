@@ -7,7 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class Kitchen extends AppCompatActivity {
     private int height;
     private int width;
     private ArrayList<Point> eatablesRain = new ArrayList<>();
+    private CanvasWrapper canvasWrapper;
+    private SensorManager sensorManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +27,15 @@ public class Kitchen extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public Kitchen(int height, int width) {
+    public Kitchen( int height, int width) {
+        this.sensorManager = sensorManager;
         this.height = height;
         this.width = width;
+        this.canvasWrapper = new CanvasWrapper(width,height);
+    }
+
+    public boolean onDrag(DragEvent dragEvent) {
+        return false;
     }
 
     public void drawEatable(Canvas canvas, int x, int y) {
@@ -45,16 +55,16 @@ public class Kitchen extends AppCompatActivity {
         // body
         Paint blackPaint = new Paint();
         blackPaint.setColor(Color.rgb(0, 0, 0));
-        canvas.drawRect(x,y,x+400,y+400,blackPaint);
+        canvasWrapper.drawRect(x,y,x+400,y+400,blackPaint);
         // eye
         Paint wightPaint = new Paint();
         wightPaint.setColor(Color.rgb(250, 250, 250));
         x+=150;
         y+=50;
-        canvas.drawRect(x,y,x+100,y+100,wightPaint);
+        canvasWrapper.drawRect(x,y,x+100,y+100,wightPaint);
         x+=40;
         y+=0;
-        canvas.drawRect(x,y,x+20,y+50,blackPaint);
+        canvasWrapper.drawRect(x,y,x+20,y+50,blackPaint);
 
         //mouthe
 
@@ -62,6 +72,7 @@ public class Kitchen extends AppCompatActivity {
 
 
     public void draw(Canvas canvas) {
+        canvasWrapper.setCanvas(canvas);
         drawGraphicMan(canvas,500,1500);
     }
 
