@@ -60,10 +60,10 @@ public class Gym implements SensorEventListener {
             float gZ = z / SensorManager.GRAVITY_EARTH;
 
             // gForce will be close to 1 when there is no movement
-            float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
+            //float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
 
             //Random pour tester
-            //float gForce = (float) (Math.random() * 10);
+            float gForce = (float) (Math.random() * 10);
 
             max = gForce > max ? gForce : max;
         }
@@ -84,13 +84,13 @@ public class Gym implements SensorEventListener {
         paint.setColor(Color.rgb(125, 125, 125));
 
         //Barre transversale
-        canvasWrapper.drawRect(100, 280, 900, 303, paint);
+        canvasWrapper.drawRect(100, 600, 980, 650, paint);
 
         //Barre de gauche
-        canvasWrapper.drawRect(130, 280, 180, 980, paint);
+        canvasWrapper.drawRect(130, 650, 180, 2154, paint);
 
         //Barre de droite
-        canvasWrapper.drawRect(820, 280, 870, 980, paint);
+        canvasWrapper.drawRect(900, 650, 950, 2154, paint);
 
         if (animationFrames.isEmpty()){
             animationFrames.add(PullUpPose.DOWN);
@@ -114,64 +114,62 @@ public class Gym implements SensorEventListener {
     public void drawFirstPose(Paint paint, Canvas canvas){
         //Graphic man body
         paint.setColor(Color.rgb(0, 0, 0));
-        canvasWrapper.drawRect(310, 440, 690, 630, paint);
+        canvasWrapper.drawRect(340, 950, 740, 1350, paint);
 
         //Graphic man eye
         paint.setColor(Color.rgb(250, 250, 250));
-        canvasWrapper.drawRect(450, 460, 550, 510, paint);
+        canvasWrapper.drawRect(490, 1000, 590, 1100, paint);
 
         paint.setColor(Color.rgb(0, 0, 0));
-        canvasWrapper.drawRect(490, 480, 510, 510, paint);
+        canvasWrapper.drawRect(530, 1040, 550, 1100, paint);
 
         //Graphic man arms
-        canvasWrapper.drawRect(275, 280, 310, 535, paint);
-        canvasWrapper.drawRect(690, 280, 725, 535, paint);
+        canvasWrapper.drawRect(300, 600, 340, 1150, paint);
+        canvasWrapper.drawRect(740, 600, 780, 1150, paint);
 
     }
-
+//TODO Faire les deux autres positions
     public void drawSecondPose(Paint paint, Canvas canvas){
         paint.setColor(Color.rgb(0, 0, 0));
 
-        //Graphic man left arm
-        canvasWrapper.drawLine(185, 395, 320, 430, paint);
-        canvasWrapper.drawLine(300, 280, 185, 405, paint);
-
-        //Graphic man right arm
-        canvasWrapper.drawLine(680, 430, 820, 395, paint);
-        canvasWrapper.drawLine(690, 280, 830, 405, paint);
-
         //Graphic man body
-        canvasWrapper.drawRect(310, 350, 690, 540, paint);
+        canvasWrapper.drawRect(340, 750, 740, 1150, paint);
 
         //Graphic man eye
         paint.setColor(Color.rgb(250, 250, 250));
-        canvasWrapper.drawRect(450, 370, 550, 420, paint);
+        canvasWrapper.drawRect(490, 800, 590, 900, paint);
 
         paint.setColor(Color.rgb(0, 0, 0));
-        canvasWrapper.drawRect(490, 390, 510, 420, paint);
+        canvasWrapper.drawRect(530, 840, 550, 900, paint);
 
+        //Graphic man left arm
+        canvasWrapper.drawLine(200, 875, 350, 950, paint);
+        canvasWrapper.drawLine(200, 900, 330, 600, paint);
+
+        //Graphic man right arm
+        canvasWrapper.drawLine(880, 875, 730, 950, paint);
+        canvasWrapper.drawLine(880, 900, 750, 600, paint);
     }
 
     public void drawThirdPose(Paint paint, Canvas canvas){
         paint.setColor(Color.rgb(0, 0, 0));
 
-        //Graphic man left arm
-        canvasWrapper.drawLine(185, 400, 320, 350, paint);
-        canvasWrapper.drawLine(300, 280, 185, 405, paint);
-
-        //Graphic man right arm
-        canvasWrapper.drawLine(680, 350, 820, 395, paint);
-        canvasWrapper.drawLine(700, 280, 830, 400, paint);
-
         //Graphic man body
-        canvasWrapper.drawRect(310, 250, 690, 440, paint);
+        canvasWrapper.drawRect(340, 550, 740, 950, paint);
 
         //Graphic man eye
         paint.setColor(Color.rgb(250, 250, 250));
-        canvasWrapper.drawRect(450, 270, 550, 320, paint);
+        canvasWrapper.drawRect(490, 600, 590, 700, paint);
 
         paint.setColor(Color.rgb(0, 0, 0));
-        canvasWrapper.drawRect(490, 290, 510, 320, paint);
+        canvasWrapper.drawRect(530, 640, 550, 700, paint);
 
+        //Graphic man left arm
+        canvasWrapper.drawLine(200, 875, 350, 750, paint);
+        canvasWrapper.drawLine(200, 875, 330, 600, paint);
+
+        //Graphic man right arm
+        canvasWrapper.drawLine(880, 875, 730, 750, paint);
+        canvasWrapper.drawLine(880, 875, 750, 600, paint);
     }
 }
