@@ -24,7 +24,7 @@ public class CanvasWrapper {
     }
 
     public void drawLine(float starX, float starY, float stopX, float stopY, Paint paint){
-        paint.setStrokeWidth(35*widthRatio);
+        paint.setStrokeWidth(50*widthRatio);
         canvas.drawLine(starX*widthRatio,starY*heightRatio,stopX*widthRatio,stopY*heightRatio,paint);
     }
 }
