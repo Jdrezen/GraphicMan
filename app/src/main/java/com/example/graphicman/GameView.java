@@ -104,7 +104,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 case KITCHEN:
                     break;
             }
-            lifebars.draw(canvas);
+//            lifebars.draw(canvas);
             button.draw(canvas, state);
         }
     }
