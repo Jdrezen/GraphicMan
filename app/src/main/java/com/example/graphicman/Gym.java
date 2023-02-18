@@ -24,7 +24,7 @@ public class Gym implements SensorEventListener {
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
 
-    public Gym(Activity mother,SensorManager sensorManager, int height, int width) {
+    public Gym(SensorManager sensorManager, int height, int width) {
         this.mother = mother;
         this.sensorManager = sensorManager;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
