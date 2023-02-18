@@ -45,8 +45,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
-        gym = new Gym(sensorManager, displayMetrics.heightPixels, displayMetrics.widthPixels);
-        lifebars = new LifeBars(context,10,10,100,displayMetrics.heightPixels, displayMetrics.widthPixels);
+        gym = new Gym(sensorManager, screenHeight, screenWidth);
+        lifebars = new LifeBars(context,10,10,100, screenHeight, screenWidth);
         button = new Button(screenHeight, screenWidth);
 
         getHolder().addCallback(this);

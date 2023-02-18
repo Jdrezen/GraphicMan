@@ -9,84 +9,74 @@ import android.view.MotionEvent;
 
 public class Button {
     int height, width;
+    CanvasWrapper canvasWrapper;
 
     public Button(int height, int width) {
         this.height = height;
         this.width = width;
+        this.canvasWrapper = new CanvasWrapper(width, height);
     }
 
     public void draw(Canvas canvas, EState state) {
+        canvasWrapper.setCanvas(canvas);
         switch (state) {
             case GYM:
-                drawGymButtons(canvas);
+                drawGymButtons(canvasWrapper);
                 break;
             case BEDROOM:
-                drawBedroomButtons(canvas);
+                drawBedroomButtons(canvasWrapper);
                 break;
             case KITCHEN:
-                drawKitchenButtons(canvas);
+                drawKitchenButtons(canvasWrapper);
                 break;
         }
     }
 
-    private void drawKitchenButtons(Canvas canvas) {
+    private void drawKitchenButtons(CanvasWrapper canvasWrapper) {
         Paint paint = new Paint();
-        Rect bounds = new Rect();
 
         // GYM
         String gymLabel = "Gym";
         paint.setColor(Color.rgb(50, 50, 50));
-        paint.setTextSize(70);
-        paint.getTextBounds(gymLabel, 0, gymLabel.length(), bounds);
-        canvas.drawRect(20, 50, bounds.width() + 50, 150, paint);
+        canvasWrapper.drawRect(20, 20, 300, 120, paint);
         paint.setColor(Color.GRAY);
-        canvas.drawText(gymLabel, 30, 120, paint);
+        canvasWrapper.drawText(gymLabel, 110, 85, paint);
 
         // BEDROOM
         String bedroomLabel = "Bedroom";
         paint.setColor(Color.rgb(50, 50, 50));
-        paint.setTextSize(70);
-        paint.getTextBounds(bedroomLabel, 0, bedroomLabel.length(), bounds);
-        canvas.drawRect(width - bounds.width() - 40, 50, width - 10, 150, paint);
+        canvasWrapper.drawRect(780, 20, 1060, 120, paint);
         paint.setColor(Color.GRAY);
-        canvas.drawText(bedroomLabel, width - bounds.width() - 30, 120, paint);
+        canvasWrapper.drawText(bedroomLabel, 825, 85, paint);
     }
 
-    private void drawGymButtons(Canvas canvas) {
+    private void drawGymButtons(CanvasWrapper canvasWrapper) {
         Paint paint = new Paint();
-        Rect bounds = new Rect();
+
+        // BEDROOM
+        String kitchenLabel = "Kitchen";
+        paint.setColor(Color.rgb(50, 50, 50));
+        canvasWrapper.drawRect(780, 20, 1060, 120, paint);
+        paint.setColor(Color.GRAY);
+        canvasWrapper.drawText(kitchenLabel, 840, 85, paint);
+    }
+
+    private void drawBedroomButtons(CanvasWrapper canvasWrapper) {
+        Paint paint = new Paint();
 
         // KITCHEN
         String kitchenLabel = "Kitchen";
         paint.setColor(Color.rgb(50, 50, 50));
-        paint.setTextSize(70);
-        paint.getTextBounds(kitchenLabel, 0, kitchenLabel.length(), bounds);
-        canvas.drawRect(width - bounds.width() - 40, 50, width - 10, 150, paint);
+        canvasWrapper.drawRect(20, 20, 300, 120, paint);
         paint.setColor(Color.GRAY);
-        canvas.drawText(kitchenLabel, width - bounds.width() - 30, 120, paint);
-    }
-
-    private void drawBedroomButtons(Canvas canvas) {
-        Paint paint = new Paint();
-        Rect bounds = new Rect();
-
-        // KITCHEN
-        String kitchenLabel = "Kitchen";
-        paint.setColor(Color.rgb(50, 50, 50));
-        paint.setTextSize(70);
-        paint.getTextBounds(kitchenLabel, 0, kitchenLabel.length(), bounds);
-        canvas.drawRect(20, 50, bounds.width() + 50, 150, paint);
-        paint.setColor(Color.GRAY);
-        canvas.drawText(kitchenLabel, 30, 120, paint);
+        canvasWrapper.drawText(kitchenLabel, 75, 85, paint);
     }
 
     public EState buttonTouch(MotionEvent event, EState state) {
-        Rect kitchenBoundsLeft = getBounds("Kitchen", true);
-        Rect kitchenBoundsRight = getBounds("Kitchen", false);
-        Rect gymBounds = getBounds("Gym", true);
-        Rect bedroomBounds = getBounds("Bedroom", false);
-        Log.d("but", "event : " + event.getX() + ", " + event.getY());
-        Log.d("but", "rect : " + gymBounds.top + ", " + gymBounds.left + ", " + gymBounds.bottom + ", " + gymBounds.right + ", " );
+        Rect kitchenBoundsLeft = getBounds(true);
+        Rect kitchenBoundsRight = getBounds(false);
+        Rect gymBounds = getBounds(true);
+        Rect bedroomBounds = getBounds(false);
 
         if (state == EState.KITCHEN) {
             if (gymBounds.top < event.getY() && gymBounds.bottom > event.getY()
@@ -110,19 +100,15 @@ public class Button {
         return state;
     }
 
-    private Rect getBounds(String label, boolean left) {
+    private Rect getBounds(boolean left) {
         Paint paint = new Paint();
         Rect bounds = new Rect();
 
-        paint.setColor(Color.rgb(50, 50, 50));
-        paint.setTextSize(70);
-        paint.getTextBounds(label, 0, label.length(), bounds);
-
         // Bouton à gauche ou à droite
         if (left) {
-            return new Rect(20, 50, bounds.width() + 50, 150);
+            return canvasWrapper.getRect(20, 20, 300, 120);
         } else {
-            return new Rect(width - bounds.width() - 40, 50, width - 10, 150);
+            return canvasWrapper.getRect(780, 20, 1060, 120);
         }
     }
 }
