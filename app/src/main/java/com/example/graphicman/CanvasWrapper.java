@@ -2,6 +2,7 @@ package com.example.graphicman;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class CanvasWrapper {
 
@@ -26,5 +27,14 @@ public class CanvasWrapper {
     public void drawLine(float starX, float starY, float stopX, float stopY, Paint paint){
         paint.setStrokeWidth(50*widthRatio);
         canvas.drawLine(starX*widthRatio,starY*heightRatio,stopX*widthRatio,stopY*heightRatio,paint);
+    }
+
+    public void drawText(String text, float x, float y, Paint paint){
+        paint.setTextSize(50*widthRatio);
+        canvas.drawText(text, x*widthRatio, y*heightRatio, paint);
+    }
+
+    public Rect getRect(int left, int top, int right, int bottom){
+        return new Rect((int)(left*widthRatio),(int)(top*heightRatio),(int)(right*widthRatio),(int)(bottom*heightRatio));
     }
 }
