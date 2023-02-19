@@ -32,7 +32,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private EState state;
 
     public boolean isRunning() {
-        return running;
+        switch (state) {
+            case GYM:
+                return gym.isRunning();
+            case BEDROOM:
+                return true;
+            case KITCHEN:
+                return true;
+            default:
+                throw new IllegalStateException("Unexpected value: " + state);
+        }
     }
 
 
@@ -45,12 +54,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
-        gym = new Gym(sensorManager, screenHeight, screenWidth);
-        lifebars = new LifeBars(context,10,10,100, screenHeight, screenWidth);
+        lifebars = new LifeBars(context,100,100,10, screenHeight, screenWidth);
+        gym = new Gym(sensorManager, lifebars, screenHeight, screenWidth);
         button = new Button(screenHeight, screenWidth);
 
         getHolder().addCallback(this);
-        thread = new GameThread(getHolder(), this);
+        thread = new GameThread(context, getHolder(), this);
     }
 
     @Override

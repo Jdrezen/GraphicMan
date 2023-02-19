@@ -18,20 +18,27 @@ import java.util.Queue;
 
 public class Gym implements SensorEventListener {
     private int height, width;
+    private boolean running;
     private float max;
     private Activity mother;
     private Queue<PullUpPose> animationFrames = new LinkedList<PullUpPose>();
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
+    private LifeBars lifeBars;
 
-    public Gym(SensorManager sensorManager, int height, int width) {
-        this.mother = mother;
+    public Gym(SensorManager sensorManager, LifeBars lifeBars, int height, int width) {
         this.sensorManager = sensorManager;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        this.lifeBars = lifeBars;
         this.height = height;
         this.width = width;
         this.animationFrames.add(PullUpPose.DOWN);
         this.canvasWrapper = new CanvasWrapper(width,height);
+        this.running = true;
+    }
+
+    public boolean isRunning(){
+        return running;
     }
 
     @Override
@@ -69,7 +76,7 @@ public class Gym implements SensorEventListener {
             //Random pour tester
             float gForce = (float) (Math.random() * 10);
 
-            max = gForce > max ? gForce : max;
+            max = Math.max(gForce, max);
         }
     }
 
@@ -82,14 +89,6 @@ public class Gym implements SensorEventListener {
     }
 
     public void draw(Canvas canvas){
-        //TODO Trouver un moyen de lancer le score activity de manière propre
-        // Dans le cas présent il est appelé en boucle
-        //Pour tester l'affichage du score
-        Intent intent = new Intent(mother, ScoreActivity.class);
-        intent.putExtra("score", 15);
-        mother.startActivity(intent);
-
-
         canvasWrapper.setCanvas(canvas);
         canvas.drawColor(Color.WHITE);
         Paint paint = new Paint();
@@ -119,7 +118,13 @@ public class Gym implements SensorEventListener {
 
             case UP:
                 drawThirdPose(paint, canvas);
+                lifeBars.addHealth(5);
+                lifeBars.subEnegy(10);
                 break;
+        }
+
+        if(lifeBars.isDead()){
+            running = false;
         }
     }
 
@@ -140,7 +145,7 @@ public class Gym implements SensorEventListener {
         canvasWrapper.drawRect(740, 600, 780, 1150, paint);
 
     }
-//TODO Faire les deux autres positions
+
     public void drawSecondPose(Paint paint, Canvas canvas){
         paint.setColor(Color.rgb(0, 0, 0));
 
