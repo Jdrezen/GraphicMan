@@ -119,7 +119,7 @@ public class Gym implements SensorEventListener {
             case UP:
                 drawThirdPose(paint, canvas);
                 lifeBars.addHealth(5);
-                lifeBars.subEnegy(10);
+                lifeBars.subEnegy(5);
                 break;
         }
 
