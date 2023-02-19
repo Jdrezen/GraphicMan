@@ -1,5 +1,7 @@
 package com.example.graphicman;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Handler;
 import android.util.Log;
@@ -12,10 +14,12 @@ public class GameThread extends Thread {
     private Boolean running;
     private Canvas canvas;
     private Handler h = new Handler();
+    private Context context;
 
-    public GameThread(SurfaceHolder surfaceHolder, GameView gameView) {
+    public GameThread(Context context, SurfaceHolder surfaceHolder, GameView gameView) {
 
         super();
+        this.context = context;
         this.surfaceHolder = surfaceHolder;
         this.gameView = gameView;
 
@@ -47,6 +51,11 @@ public class GameThread extends Thread {
                         }
                     }
                 }
+            }
+            else {
+                Intent intent = new Intent(context, ScoreActivity.class);
+                intent.putExtra("score", 15);
+                context.startActivity(intent);
             }
         }
     };
