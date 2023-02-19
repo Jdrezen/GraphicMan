@@ -3,6 +3,7 @@ package com.example.graphicman;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -22,13 +23,18 @@ public class ScoreActivity extends AppCompatActivity {
         highScore = sharedPref.getInt("highScore", score);
 
         TextView highScoreView = findViewById(R.id.highScore);
-        highScoreView.setText(highScore+"");
+        highScoreView.setText(highScore);
 
         TextView scoreView = findViewById(R.id.score);
         scoreView.setText(score + "");
 
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("highScore", score > highScore ? score : highScore);
+        editor.putInt("highScore", Math.max(score, highScore));
         editor.apply();
+    }
+
+    public void recommencerPartie(){
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
     }
 }
