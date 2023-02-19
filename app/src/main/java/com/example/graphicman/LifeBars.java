@@ -75,6 +75,10 @@ public class LifeBars {
         this.health -=value;
     }
 
+    public boolean isDead(){
+        return (this.health == 0 || this.energy == 0 || this.food == 0);
+    }
+
     public void drawPoulew(CanvasWrapper canvasWrapper){
         int x = 20;
         int y = 325;
@@ -154,10 +158,6 @@ public class LifeBars {
         drawEnergy(canvasWrapper);
         drawBars(canvasWrapper);
         drawCross(canvasWrapper);
-
-
-
-
     }
 
 
