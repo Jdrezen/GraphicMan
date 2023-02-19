@@ -15,6 +15,7 @@ public class GameThread extends Thread {
     private Canvas canvas;
     private Handler h = new Handler();
     private Context context;
+    private Chrono chrono;
 
     public GameThread(Context context, SurfaceHolder surfaceHolder, GameView gameView) {
 
@@ -22,6 +23,7 @@ public class GameThread extends Thread {
         this.context = context;
         this.surfaceHolder = surfaceHolder;
         this.gameView = gameView;
+        this.chrono = new Chrono();
 
     }
     public void setRunning(boolean isRunning) {
@@ -30,6 +32,7 @@ public class GameThread extends Thread {
 
     @Override
     public void run() {
+        chrono.start();
         h.postDelayed(runDraw , 100);
     }
     private Runnable runDraw = new Runnable() {
@@ -53,8 +56,9 @@ public class GameThread extends Thread {
                 }
             }
             else {
+                chrono.stop();
                 Intent intent = new Intent(context, ScoreActivity.class);
-                intent.putExtra("score", 15);
+                intent.putExtra("score", chrono.getTime());
                 context.startActivity(intent);
             }
         }
