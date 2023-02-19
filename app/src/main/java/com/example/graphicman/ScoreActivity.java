@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class ScoreActivity extends AppCompatActivity {
@@ -23,7 +24,7 @@ public class ScoreActivity extends AppCompatActivity {
         highScore = sharedPref.getInt("highScore", score);
 
         TextView highScoreView = findViewById(R.id.highScore);
-        highScoreView.setText(highScore);
+        highScoreView.setText(highScore + "");
 
         TextView scoreView = findViewById(R.id.score);
         scoreView.setText(score + "");
@@ -37,4 +38,5 @@ public class ScoreActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         this.startActivity(intent);
     }
+
 }
