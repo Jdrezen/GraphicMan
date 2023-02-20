@@ -57,7 +57,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
-        lifebars = new LifeBars(context,90,60,10, screenHeight, screenWidth);
+        lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         gym = new Gym(sensorManager, lifebars, screenHeight, screenWidth);
         kitchen = new Kitchen(sensorManager,state, lifebars, screenHeight, screenWidth);
         bedroom = new Bedroom(sensorManager, screenHeight, screenWidth, lifebars);
