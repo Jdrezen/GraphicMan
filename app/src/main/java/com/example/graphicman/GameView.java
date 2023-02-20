@@ -39,7 +39,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             case BEDROOM:
                 return true;
             case KITCHEN:
-                return true;
+                return kitchen.isRunning();
             default:
                 throw new IllegalStateException("Unexpected value: " + state);
         }
@@ -55,7 +55,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
-        lifebars = new LifeBars(context,100,100,10, screenHeight, screenWidth);
+        lifebars = new LifeBars(context,90,60,10, screenHeight, screenWidth);
         gym = new Gym(sensorManager, lifebars, screenHeight, screenWidth);
         kitchen = new Kitchen(sensorManager, lifebars, screenHeight, screenWidth);
         button = new Button(screenHeight, screenWidth);
