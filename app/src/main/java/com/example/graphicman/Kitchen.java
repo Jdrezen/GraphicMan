@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 
@@ -20,6 +21,8 @@ public class Kitchen extends AppCompatActivity {
     private ArrayList<Point> eatablesRain = new ArrayList<>();
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
+    private int xGraphicman = 500;
+    private int yGraphicman = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,28 @@ public class Kitchen extends AppCompatActivity {
         this.canvasWrapper = new CanvasWrapper(width,height);
     }
 
-    public boolean onDrag(DragEvent dragEvent) {
-        return false;
+    public boolean onDrag(DragEvent event) {
+        xGraphicman = (int)event.getX();
+        int action = event.getAction();
+        switch (event.getAction()) {
+            case DragEvent.ACTION_DRAG_STARTED:
+
+                break;
+            case DragEvent.ACTION_DRAG_ENTERED:
+
+                break;
+            case DragEvent.ACTION_DRAG_EXITED:
+
+                break;
+            case DragEvent.ACTION_DROP:
+
+                break;
+            case DragEvent.ACTION_DRAG_ENDED:
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     public void drawEatable(Canvas canvas, int x, int y) {
@@ -73,7 +96,7 @@ public class Kitchen extends AppCompatActivity {
 
     public void draw(Canvas canvas) {
         canvasWrapper.setCanvas(canvas);
-        drawGraphicMan(canvas,500,1500);
+        drawGraphicMan(canvas,xGraphicman,1500);
     }
 
     public void update() {
