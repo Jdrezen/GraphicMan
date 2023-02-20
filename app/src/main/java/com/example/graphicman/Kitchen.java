@@ -7,6 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,14 +18,17 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class Kitchen extends AppCompatActivity {
+public class Kitchen extends AppCompatActivity implements SensorEventListener {
     private int height;
     private int width;
+    private boolean running;
     private ArrayList<Point> eatablesRain = new ArrayList<>();
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
+    private LifeBars lifeBars;
     private int xGraphicman = 500;
     private int yGraphicman = 1500;
+    private int dirrection = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,35 +36,28 @@ public class Kitchen extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public Kitchen( int height, int width) {
+    public Kitchen(SensorManager sensorManager, LifeBars lifeBars, int height, int width) {
         this.sensorManager = sensorManager;
+        this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_NORMAL);
+        this.lifeBars = lifeBars;
         this.height = height;
         this.width = width;
         this.canvasWrapper = new CanvasWrapper(width,height);
+        this.running = true;
     }
 
-    public boolean onDrag(DragEvent event) {
-        xGraphicman = (int)event.getX();
-        int action = event.getAction();
-        switch (event.getAction()) {
-            case DragEvent.ACTION_DRAG_STARTED:
+    public boolean isRunning(){
+        return running;
+    }
 
-                break;
-            case DragEvent.ACTION_DRAG_ENTERED:
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Log.d("gyro", " x = " + sensorEvent.values[0] + " y = " + sensorEvent.values[1] + " z = " + sensorEvent.values[2]);
+        dirrection = (int)(sensorEvent.values[1] * 10);
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
-                break;
-            case DragEvent.ACTION_DRAG_EXITED:
-
-                break;
-            case DragEvent.ACTION_DROP:
-
-                break;
-            case DragEvent.ACTION_DRAG_ENDED:
-                break;
-            default:
-                break;
-        }
-        return true;
     }
 
     public void drawEatable(Canvas canvas, int x, int y) {
@@ -93,14 +92,16 @@ public class Kitchen extends AppCompatActivity {
 
     }
 
+    public void update(){
+        if(xGraphicman + dirrection  >= 0 && xGraphicman + dirrection  <=1080-400 ){
+            xGraphicman+= dirrection;
+        }
+    }
+
 
     public void draw(Canvas canvas) {
         canvasWrapper.setCanvas(canvas);
         drawGraphicMan(canvas,xGraphicman,1500);
-    }
-
-    public void update() {
-
     }
 
 
