@@ -34,6 +34,7 @@ public class GameThread extends Thread {
     public void run() {
         chrono.start();
         h.postDelayed(runDraw , 100);
+        h.postDelayed(runUpdate , 100);
     }
     private Runnable runDraw = new Runnable() {
         public void run() {
@@ -60,6 +61,16 @@ public class GameThread extends Thread {
                 Intent intent = new Intent(context, ScoreActivity.class);
                 intent.putExtra("score", chrono.getTime());
                 context.startActivity(intent);
+            }
+        }
+    };
+
+    private Runnable runUpdate = new Runnable() {
+        public void run() {
+            if (gameView.isRunning()) {
+                Log.d("runUpdate", "threadLog");
+                gameView.update();
+                h.postDelayed(this, 10);
             }
         }
     };

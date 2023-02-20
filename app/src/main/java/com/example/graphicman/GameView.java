@@ -25,6 +25,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private boolean running = true;
     private SensorManager sensorManager;
     private Gym gym;
+    private Kitchen kitchen;
     private LifeBars lifebars;
     private Button button;
     private int screenHeight;
@@ -48,7 +49,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public GameView(Context context, SensorManager sensorManager) {
         super(context);
-        state = EState.BEDROOM;
+        state = EState.KITCHEN;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -58,6 +59,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         gym = new Gym(sensorManager, lifebars, screenHeight, screenWidth);
         bedroom = new Bedroom(sensorManager, screenHeight, screenWidth, lifebars);
+        kitchen = new Kitchen(sensorManager, lifebars, screenHeight, screenWidth);
         button = new Button(screenHeight, screenWidth);
 
         getHolder().addCallback(this);
@@ -102,11 +104,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     bedroom.draw(canvas);
                     break;
                 case KITCHEN:
+                    kitchen.draw(canvas);
                     break;
             }
             lifebars.draw(canvas);
             button.draw(canvas, state);
         }
+    }
+    public void update() {
+            switch (state) {
+                case GYM:
+                    break;
+                case BEDROOM:
+                    break;
+                case KITCHEN:
+                    kitchen.update();
+                    break;
+            }
     }
 
     public void onTouch(MotionEvent motionEvent) {
