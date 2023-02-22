@@ -19,6 +19,9 @@ public class Bedroom implements SensorEventListener {
     private Sensor lightSensor;
     private int lightValue;
     private CanvasWrapper canvasWrapper;
+    private int dificulty;
+    private int mouvement = 600;
+    private boolean mvtDirection = true;
 
     public Bedroom(SensorManager sensorManager, int height, int width) {
         this.height = height;
@@ -28,6 +31,8 @@ public class Bedroom implements SensorEventListener {
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), SensorManager.SENSOR_DELAY_NORMAL);
         this.lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         this.canvasWrapper = new CanvasWrapper(width, height);
+
+        dificulty = 2;
     }
 
     public void draw(Canvas canvas) {
@@ -39,25 +44,31 @@ public class Bedroom implements SensorEventListener {
         Paint yellowPaint = new Paint();
         yellowPaint.setColor(Color.rgb(250, 250, 0));
 
-        int barHeight = (2154 * 3/4 - 5) - (2154 * 1/4 + 35);
+        int barHeight = 2154 * 3/4 + 200 - 700 - 10;
         // border
         canvasWrapper.drawRect(1080 - 80,  700, 1080 - 80 + barWidth, 2154 * 3/4 + 200, backPaint);
-        // bar
-        canvasWrapper.drawRect(1080 - 95, 2154 * 3/4 - 5 - barHeight * lightValue / 100, 1080 - 105 + barWidth, 2154 * 3/4 - 5, yellowPaint);
+        // light bar
+        canvasWrapper.drawRect(1080 - 75, 2154 * 3/4 + 195 - (barHeight * lightValue / 100), 1080 - 85 + barWidth, 2154 * 3/4 + 195, yellowPaint);
 
         Paint redPaint = new Paint();
         redPaint.setColor(Color.RED);
-        // selecter
-        canvasWrapper.drawRect(1080 - 100, 1400, 1080 - 20, 1405, redPaint);
+        int lower = 2154 * 3/4 + 195 - 50;
+        int selectorSize = lower - 200 / dificulty;
+        int offset = moveSelector();
+        // selector (red bars)
+        canvasWrapper.drawRect(1080 - 100, lower - offset, 1080 - 20, lower + 5 - offset, redPaint);
+        canvasWrapper.drawRect(1080 - 100, selectorSize - offset, 1080 - 20, selectorSize + 5 - offset, redPaint);
+
+
         // sun
         canvasWrapper.drawCircle(1080 - 60, 2154/4 + 55, 20, yellowPaint);
-        canvasWrapper.drawCircle(1080 - 20, 2154 * 1/4 - 50, 10, yellowPaint);
-        canvasWrapper.drawCircle(1080 - 100, 2154 * 1/4 - 50, 10, yellowPaint);
-        canvasWrapper.drawCircle(1080 - 100, 2154 * 1/4 - 0, 10, yellowPaint);
-        canvasWrapper.drawCircle(1080 - 20, 2154 * 1/4 - 0, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 20, 2154 * 1/4 + 25, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 100, 2154 * 1/4 + 25, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 100, 2154 * 1/4 + 75, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 20, 2154 * 1/4 + 75, 10, yellowPaint);
 
-        canvasWrapper.drawCircle(1080 - 60, 2154 * 1/4 - 70, 10, yellowPaint);
-        canvasWrapper.drawCircle(1080 - 60, 2154 * 1/4 + 20, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 60, 2154 * 1/4 + 5, 10, yellowPaint);
+        canvasWrapper.drawCircle(1080 - 60, 2154 * 1/4 + 105, 10, yellowPaint);
 
     }
 
@@ -80,5 +91,18 @@ public class Bedroom implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         // unused
+    }
+
+    private int moveSelector() {
+        if (mouvement <= 0) {
+            mouvement += dificulty;
+            mvtDirection = true;
+        } else if (mouvement > 600) {
+            mouvement -= dificulty;
+            mvtDirection = false;
+        } else {
+            mouvement = mouvement + (mvtDirection ?  dificulty : -dificulty) * 5;
+        }
+        return mouvement;
     }
 }
