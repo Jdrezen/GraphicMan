@@ -47,21 +47,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".BedroomDeprecated"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Gym"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Kitchen"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
