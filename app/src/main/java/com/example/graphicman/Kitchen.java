@@ -29,6 +29,7 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
     private LifeBars lifeBars;
+    private EState state;
     private int xGraphicman = 500;
     private int yGraphicman = 1500;
     private int dirrection = 0;
@@ -39,8 +40,9 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
         setContentView(R.layout.activity_main);
     }
 
-    public Kitchen(SensorManager sensorManager, LifeBars lifeBars, int height, int width) {
+    public Kitchen(SensorManager sensorManager, EState state, LifeBars lifeBars, int height, int width) {
         this.sensorManager = sensorManager;
+        this.state = state;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_NORMAL);
         this.lifeBars = lifeBars;
         this.height = height;
@@ -49,6 +51,10 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
         this.running = true;
         this.eatableHandler = new Handler();
         this.eatableHandler.postDelayed(addEatable , 10);
+    }
+
+    public void setState(EState state) {
+        this.state = state;
     }
 
     public boolean isRunning(){
@@ -66,11 +72,15 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
 
     private Runnable addEatable = new Runnable() {
         public void run() {
-            Random rand = new Random();
-            int obstaclex = (int)(Math.random() * (width + 1));
-            int obstacley = 0;
-            eatablesRain.add(new Point(obstaclex,obstacley));
-            eatableHandler.postDelayed(this, 1000);
+            if(state == EState.KITCHEN) {
+                Random rand = new Random();
+                int obstaclex = (int) (Math.random() * (width + 1));
+                int obstacley = 0;
+                eatablesRain.add(new Point(obstaclex, obstacley));
+                eatableHandler.postDelayed(this, 1000);
+            }else {
+                eatableHandler.postDelayed(this, 1000);
+            }
         }
     };
 
