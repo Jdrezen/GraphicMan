@@ -34,7 +34,11 @@ public class CanvasWrapper {
         canvas.drawText(text, x*widthRatio, y*heightRatio, paint);
     }
 
-    public Rect getRect(int left, int top, int right, int bottom){
-        return new Rect((int)(left*widthRatio),(int)(top*heightRatio),(int)(right*widthRatio),(int)(bottom*heightRatio));
+    public Rect getRect(int left, int top, int right, int bottom) {
+        return new Rect((int) (left * widthRatio), (int) (top * heightRatio), (int) (right * widthRatio), (int) (bottom * heightRatio));
+    }
+
+    public void drawCircle(float x, float y, float raduis, Paint paint) {
+        canvas.drawCircle(x * widthRatio, y * heightRatio , raduis * widthRatio, paint);
     }
 }
