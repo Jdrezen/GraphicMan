@@ -20,8 +20,7 @@ public class Gym implements SensorEventListener {
     private int height, width;
     private boolean running;
     private float max;
-    private Activity mother;
-    private Queue<PullUpPose> animationFrames = new LinkedList<PullUpPose>();
+    private Queue<PullUpPose> animationFrames = new LinkedList<>();
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
     private LifeBars lifeBars;
@@ -71,10 +70,10 @@ public class Gym implements SensorEventListener {
             float gZ = z / SensorManager.GRAVITY_EARTH;
 
             // gForce will be close to 1 when there is no movement
-            //float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
+            float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
 
             //Random pour tester
-            float gForce = (float) (Math.random() * 10);
+            //float gForce = (float) (Math.random() * 10);
 
             max = Math.max(gForce, max);
         }
@@ -120,6 +119,7 @@ public class Gym implements SensorEventListener {
                 drawThirdPose(paint, canvas);
                 lifeBars.addHealth(5);
                 lifeBars.subEnegy(5);
+                lifeBars.subFood(5);
                 break;
         }
 

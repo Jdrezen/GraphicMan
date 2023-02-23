@@ -55,6 +55,7 @@ public class LifeBars {
     public void addEnegy(int value){
         if((this.energy + value) >100){
             this.energy = 100;
+            subHealth(1);
         }else{
             this.energy +=value;
         }
@@ -69,6 +70,7 @@ public class LifeBars {
     public void addHealth(int value){
         if((this.health + value) >100){
             this.health = 100;
+            subHealth(5);
         }else{
             this.health +=value;
         }
