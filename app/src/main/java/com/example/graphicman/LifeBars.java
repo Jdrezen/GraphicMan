@@ -8,9 +8,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.core.content.res.ResourcesCompat;
+
+import java.util.Random;
 
 public class LifeBars {
     private int food;
@@ -20,6 +24,7 @@ public class LifeBars {
     private int width;
     private float ratio = 10;
     private CanvasWrapper canvasWrapper;
+    private Handler timeHandler;
 
 
     private int barLength = 0;
@@ -35,7 +40,18 @@ public class LifeBars {
         this.barWidth = 45;
         this.ratio = ((float)(barLength-5)) /100;
         this.canvasWrapper = new CanvasWrapper(width,height);
+        this.timeHandler = new Handler();
+        this.timeHandler.postDelayed(reduceLifeBars,1000);
     }
+
+    private Runnable reduceLifeBars = new Runnable() {
+        public void run() {
+            subEnegy(1);
+            subHealth(1);
+            subFood(1);
+            timeHandler.postDelayed(this, 1000);
+        }
+    };
 
     public void addFood(int value){
         if((this.food + value) >= 100){
