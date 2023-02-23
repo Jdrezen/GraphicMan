@@ -141,7 +141,7 @@ public class Bedroom implements SensorEventListener {
     private void computeLifeBar(int high, int low, int light) {
         Log.d("tes", "monte : " + high + ", " + low + ", " + light);
         if (light > high && light < low) {
-            lifeBars.addEnegy(1);
+            lifeBars.addEnegy(5);
         }
 
     }
