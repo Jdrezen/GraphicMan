@@ -51,32 +51,37 @@ public class LifeBars {
         this.food -=value;
     }
     public void addEnegy(int value){
-        if(this.energy + value >100){
+        if(this.energy + value > 100){
             this.energy = 100;
+        } else {
+            this.energy +=value;
         }
-        this.energy +=value;
     }
     public void subEnegy(int value){
         if(this.energy - value < 0){
             this.energy = 0;
+        } else {
+            this.energy -=value;
         }
-        this.energy -=value;
     }
     public void addHealth(int value){
         if(this.health + value >100){
             this.health = 100;
+        } else {
+            this.health +=value;
         }
-        this.health +=value;
     }
     public void subHealth(int value){
         if(this.health - value < 0){
             this.health = 0;
+        } else {
+            this.health -=value;
         }
-        this.health -=value;
     }
 
     public boolean isDead(){
-        return (this.health == 0 || this.energy == 0 || this.food == 0);
+        return false;
+//        return (this.health == 0 || this.energy == 0 || this.food == 0);
     }
 
     public void drawPoulew(CanvasWrapper canvasWrapper){
