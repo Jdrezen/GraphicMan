@@ -34,6 +34,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private EState state;
 
     public boolean isRunning() {
+        kitchen.setState(state);
         switch (state) {
             case GYM:
                 return gym.isRunning();
@@ -56,10 +57,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
-        lifebars = new LifeBars(context,100,100,10, screenHeight, screenWidth);
+        lifebars = new LifeBars(context,90,60,10, screenHeight, screenWidth);
         gym = new Gym(sensorManager, lifebars, screenHeight, screenWidth);
+        kitchen = new Kitchen(sensorManager,state, lifebars, screenHeight, screenWidth);
         bedroom = new Bedroom(sensorManager, screenHeight, screenWidth, lifebars);
-        kitchen = new Kitchen(sensorManager, lifebars, screenHeight, screenWidth);
         button = new Button(screenHeight, screenWidth);
 
         getHolder().addCallback(this);
