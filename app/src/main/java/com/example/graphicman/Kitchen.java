@@ -63,7 +63,8 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        dirrection = (int)(sensorEvent.values[1] *25);
+        Log.d("sensor","x = "+sensorEvent.values[0] + "y = "+sensorEvent.values[2] + "z = "+sensorEvent.values[3]);
+        dirrection = (int)(sensorEvent.values[0] *(-25));
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
