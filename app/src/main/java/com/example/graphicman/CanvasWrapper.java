@@ -29,8 +29,8 @@ public class CanvasWrapper {
         canvas.drawLine(starX*widthRatio,starY*heightRatio,stopX*widthRatio,stopY*heightRatio,paint);
     }
 
-    public void drawText(String text, float x, float y, Paint paint){
-        paint.setTextSize(50*widthRatio);
+    public void drawText(String text, float x, float y, Paint paint, int size){
+        paint.setTextSize(size*widthRatio);
         canvas.drawText(text, x*widthRatio, y*heightRatio, paint);
     }
 
