@@ -40,14 +40,14 @@ public class Button {
         paint.setColor(Color.rgb(50, 50, 50));
         canvasWrapper.drawRect(20, 20, 300, 120, paint);
         paint.setColor(Color.GRAY);
-        canvasWrapper.drawText(gymLabel, 110, 85, paint);
+        canvasWrapper.drawText(gymLabel, 110, 85, paint, 50);
 
         // BEDROOM
         String bedroomLabel = "Bedroom";
         paint.setColor(Color.rgb(50, 50, 50));
         canvasWrapper.drawRect(780, 20, 1060, 120, paint);
         paint.setColor(Color.GRAY);
-        canvasWrapper.drawText(bedroomLabel, 825, 85, paint);
+        canvasWrapper.drawText(bedroomLabel, 825, 85, paint, 50);
     }
 
     private void drawGymButtons(CanvasWrapper canvasWrapper) {
@@ -58,7 +58,7 @@ public class Button {
         paint.setColor(Color.rgb(50, 50, 50));
         canvasWrapper.drawRect(780, 20, 1060, 120, paint);
         paint.setColor(Color.GRAY);
-        canvasWrapper.drawText(kitchenLabel, 840, 85, paint);
+        canvasWrapper.drawText(kitchenLabel, 840, 85, paint, 50);
     }
 
     private void drawBedroomButtons(CanvasWrapper canvasWrapper) {
@@ -69,7 +69,7 @@ public class Button {
         paint.setColor(Color.rgb(50, 50, 50));
         canvasWrapper.drawRect(20, 20, 300, 120, paint);
         paint.setColor(Color.GRAY);
-        canvasWrapper.drawText(kitchenLabel, 75, 85, paint);
+        canvasWrapper.drawText(kitchenLabel, 75, 85, paint, 50);
     }
 
     public EState buttonTouch(MotionEvent event, EState state) {
