@@ -154,6 +154,16 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
 
     }
 
+    public void removeOldEatables(){
+        ArrayList<Point> eatablesToKeep = new ArrayList<>();
+        for(int i=0;i<eatablesRain.size();i++){
+            if( eatablesRain.get(i).y <= 2154){
+                eatablesToKeep.add(eatablesRain.get(i));
+            }
+        }
+        eatablesRain =  eatablesToKeep;
+    }
+
 
     public void update(){
         if(xGraphicman + dirrection  >= 0 && xGraphicman + dirrection  <=1080-400 ){
@@ -165,10 +175,10 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
                lifeBars.addFood(5);
            }
         }
+        removeOldEatables();
         if(lifeBars.isDead()){
             running = false;
         }
-
     }
 
 
