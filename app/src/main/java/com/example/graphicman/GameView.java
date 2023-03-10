@@ -39,7 +39,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             case GYM:
                 return gym.isRunning();
             case BEDROOM:
-                return true;
+                return bedroom.isRunning();
             case KITCHEN:
                 return kitchen.isRunning();
             default:
