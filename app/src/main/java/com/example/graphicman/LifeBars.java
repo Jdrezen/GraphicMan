@@ -86,7 +86,6 @@ public class LifeBars {
     public void addHealth(int value){
         if((this.health + value) >100){
             this.health = 100;
-            subHealth(5);
         }else{
             this.health +=value;
         }

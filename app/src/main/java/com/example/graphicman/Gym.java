@@ -20,6 +20,7 @@ public class Gym implements SensorEventListener {
     private int height, width;
     private boolean running;
     private float max;
+    private PullUpPose lastPose;
     private Queue<PullUpPose> animationFrames = new LinkedList<>();
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
@@ -32,6 +33,7 @@ public class Gym implements SensorEventListener {
         this.height = height;
         this.width = width;
         this.animationFrames.add(PullUpPose.DOWN);
+        this.lastPose = PullUpPose.DOWN;
         this.canvasWrapper = new CanvasWrapper(width,height);
         this.running = true;
     }
@@ -109,17 +111,22 @@ public class Gym implements SensorEventListener {
         switch (animationFrames.poll()){
             case DOWN:
                 drawFirstPose(paint, canvas);
+                lastPose = PullUpPose.DOWN;
                 break;
 
             case MID:
                 drawSecondPose(paint, canvas);
+                lastPose = PullUpPose.MID;
                 break;
 
             case UP:
                 drawThirdPose(paint, canvas);
-                lifeBars.addHealth(1);
-                lifeBars.subEnegy(1);
-                lifeBars.subFood(1);
+                if(lastPose == PullUpPose.MID){
+                    lifeBars.addHealth(5);
+                    lifeBars.subEnegy(1);
+                    lifeBars.subFood(1);
+                }
+                lastPose = PullUpPose.UP;
                 break;
         }
 
