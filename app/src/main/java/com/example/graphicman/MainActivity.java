@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         gameView.setOnTouchListener(this);
 
 
-
         setContentView(gameView);
 
     }
