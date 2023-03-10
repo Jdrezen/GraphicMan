@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +21,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Kitchen extends AppCompatActivity implements SensorEventListener {
+public class Kitchen extends AppCompatActivity implements SensorEventListener{
     private int height;
     private int width;
     private boolean running;
@@ -43,7 +44,7 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
     public Kitchen(SensorManager sensorManager, EState state, LifeBars lifeBars, int height, int width) {
         this.sensorManager = sensorManager;
         this.state = state;
-        this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_NORMAL);
+        this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_NORMAL);
         this.lifeBars = lifeBars;
         this.height = height;
         this.width = width;
@@ -63,8 +64,8 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Log.d("sensor","x = "+sensorEvent.values[0] + "y = "+sensorEvent.values[2] + "z = "+sensorEvent.values[3]);
-        dirrection = (int)(sensorEvent.values[0] *(-25));
+        Log.d("sensor","x = "+sensorEvent.values[0] + "y = "+sensorEvent.values[2]);
+        dirrection = (int)(sensorEvent.values[0] *(-2));
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
@@ -190,16 +191,5 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
             drawEatable(canvas, eatablesRain.get(i).x, eatablesRain.get(i).y);
         }
         drawBotomLip(canvas,xGraphicman,1500);
-    }
-
-
-    public void goToGym(View view) {
-        Intent intent = new Intent(this, Gym.class);
-        startActivity(intent);
-    }
-
-    public void goToBedroom(View view) {
-        Intent intent = new Intent(this, Bedroom.class);
-        startActivity(intent);
     }
 }
