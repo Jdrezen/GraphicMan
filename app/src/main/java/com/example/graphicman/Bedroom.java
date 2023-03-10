@@ -24,6 +24,8 @@ public class Bedroom implements SensorEventListener {
     private boolean mvtDirection = true;
     private LifeBars lifeBars;
     private EBedroomState bedroomState = EBedroomState.AWAKE;
+    private boolean isRunning;
+    private int showzzz = 0;
 
     public Bedroom(SensorManager sensorManager, int height, int width, LifeBars lifeBars) {
         this.height = height;
@@ -34,13 +36,36 @@ public class Bedroom implements SensorEventListener {
         this.lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         this.canvasWrapper = new CanvasWrapper(width, height);
         this.lifeBars = lifeBars;
+        this.isRunning = true;
 
         dificulty = 1;
     }
 
     public void draw(Canvas canvas) {
-
         canvasWrapper.setCanvas(canvas);
+
+        switch (bedroomState) {
+            case AWAKE:
+                drawMonster(false);
+                drawBedBackground();
+                drawBedForeground();
+                drawGraphicMan();
+                break;
+            case HORROR:
+                canvas.drawColor(Color.parseColor("#282828"));
+                drawMonster(true);
+                drawBedBackground();
+                drawGraphicManSleep(true);
+                drawBedForeground();
+                break;
+            case ASLEEP:
+                canvas.drawColor(Color.parseColor("#696969"));
+                drawMonster(false);
+                drawBedBackground();
+                drawGraphicManSleep(false);
+                drawBedForeground();
+                break;
+        }
         Paint backPaint = new Paint();
         backPaint.setColor(Color.rgb(128,128,128));
 
@@ -74,28 +99,11 @@ public class Bedroom implements SensorEventListener {
         canvasWrapper.drawCircle(1080 - 60, 2154 * 1/4 + 5, 10, yellowPaint);
         canvasWrapper.drawCircle(1080 - 60, 2154 * 1/4 + 105, 10, yellowPaint);
 
-        switch (bedroomState) {
-            case AWAKE:
-                drawMonster(false);
-                drawBedBackground();
-                drawBedForeground();
-                drawGraphicMan();
-                break;
-            case HORROR:
-                drawMonster(true);
-                drawBedBackground();
-                drawGraphicManSleep(true);
-                drawBedForeground();
-                break;
-            case ASLEEP:
-                drawMonster(false);
-                drawBedBackground();
-                drawGraphicManSleep(false);
-                drawBedForeground();
-                break;
-        }
 
         computeSleepingState(selectorSize - offset, lower - offset, 2154 * 3/4 + 195 - (barHeight * lightValue / 100));
+        if (lifeBars.isDead()) {
+            isRunning = false;
+        }
     }
 
     private void drawMonster(boolean isMonster) {
@@ -175,8 +183,17 @@ public class Bedroom implements SensorEventListener {
             // Z Z Z
             paint.setColor(Color.rgb(0, 0, 0));
             canvasWrapper.drawText("Z", 560, 700, paint, 100);
-            canvasWrapper.drawText("Z", 650, 514+117, paint, 100);
-            canvasWrapper.drawText("Z", 740, 570, paint, 100);
+            if (showzzz > 5) {
+                canvasWrapper.drawText("Z", 650, 514+117, paint, 100);
+            }
+            if (showzzz > 10) {
+                canvasWrapper.drawText("Z", 740, 570, paint, 100);
+            }
+            showzzz++;
+            if (showzzz > 15) {
+                showzzz = 0;
+            }
+
         }
         // Pupil
         paint.setColor(Color.rgb(0, 0, 0));
@@ -223,7 +240,6 @@ public class Bedroom implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         float lightLevel = event.values[0];
-        Log.d("light", "light " + lightLevel);
         int maxRange = (int) lightSensor.getMaximumRange();
 
         lightValue = lightLevel > 500 ? 100 : (int) lightLevel / 5;
@@ -256,5 +272,10 @@ public class Bedroom implements SensorEventListener {
         } else {
             bedroomState = EBedroomState.HORROR;
         }
+//        bedroomState = EBedroomState.HORROR;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
     }
 }
