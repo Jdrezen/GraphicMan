@@ -53,6 +53,18 @@ public class LifeBars {
         }
     };
 
+    public String getDeathCause(){
+        if(food == 0){
+            return "FOOD";
+        }
+        else if(energy == 0){
+            return "ENERGY";
+        }
+        else{
+            return "HEALTH";
+        }
+    }
+
     public void addFood(int value){
         if((this.food + value) >= 100){
             this.food = 100;
