@@ -1,6 +1,7 @@
 package com.example.graphicman;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.TextView;
@@ -25,8 +27,9 @@ public class Gym implements SensorEventListener {
     private CanvasWrapper canvasWrapper;
     private SensorManager sensorManager;
     private LifeBars lifeBars;
+    private MediaPlayer mediaPlayer;
 
-    public Gym(SensorManager sensorManager, LifeBars lifeBars, int height, int width) {
+    public Gym(SensorManager sensorManager, LifeBars lifeBars, int height, int width, MediaPlayer mediaplayer) {
         this.sensorManager = sensorManager;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         this.lifeBars = lifeBars;
@@ -36,6 +39,7 @@ public class Gym implements SensorEventListener {
         this.lastPose = PullUpPose.DOWN;
         this.canvasWrapper = new CanvasWrapper(width,height);
         this.running = true;
+        this.mediaPlayer = mediaplayer;
     }
 
     public boolean isRunning(){
@@ -89,7 +93,14 @@ public class Gym implements SensorEventListener {
         }
     }
 
+    public void startMusic(){
+        if(!mediaPlayer.isPlaying()){
+            mediaPlayer.start();
+        }
+    }
+
     public void draw(Canvas canvas){
+        startMusic();
         canvasWrapper.setCanvas(canvas);
         canvas.drawColor(Color.WHITE);
         Paint paint = new Paint();

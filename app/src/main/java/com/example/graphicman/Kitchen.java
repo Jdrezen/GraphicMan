@@ -11,6 +11,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
     private int xGraphicman = 500;
     private int yGraphicman = 1500;
     private int dirrection = 0;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
         setContentView(R.layout.activity_main);
     }
 
-    public Kitchen(SensorManager sensorManager, EState state, LifeBars lifeBars, int height, int width) {
+    public Kitchen(SensorManager sensorManager, EState state, LifeBars lifeBars, int height, int width, MediaPlayer mediaplayer) {
         this.sensorManager = sensorManager;
         this.state = state;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_NORMAL);
@@ -51,6 +53,7 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
         this.running = true;
         this.eatableHandler = new Handler();
         this.eatableHandler.postDelayed(addEatable , 10);
+        this.mediaPlayer = mediaplayer;
     }
 
     public void setState(EState state) {
@@ -180,8 +183,14 @@ public class Kitchen extends AppCompatActivity implements SensorEventListener {
         }
     }
 
+    public void startMusic(){
+        if(!mediaPlayer.isPlaying()){
+            mediaPlayer.start();
+        }
+    }
 
     public void draw(Canvas canvas) {
+        startMusic();
         canvasWrapper.setCanvas(canvas);
         drawGraphicMan(canvas,xGraphicman,1500);
         //
