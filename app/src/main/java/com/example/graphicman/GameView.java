@@ -62,7 +62,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         state = EState.KITCHEN;
 
-        gymMusic = MediaPlayer.create(context,R.raw.phonk);
+        gymMusic = MediaPlayer.create(context,R.raw.gym);
         kichenMusic = MediaPlayer.create(context,R.raw.kichen);
         bedroomMusic = MediaPlayer.create(context,R.raw.bedroom);
 
