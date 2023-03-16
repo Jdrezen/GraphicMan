@@ -47,6 +47,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
 
+    public LifeBars getLifebars() {
+        return lifebars;
+    }
 
     public GameView(Context context, SensorManager sensorManager) {
         super(context);
@@ -96,7 +99,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (canvas != null) {
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(Color.parseColor("#F5F5F5"));
             switch (state) {
                 case GYM:
                     gym.draw(canvas);

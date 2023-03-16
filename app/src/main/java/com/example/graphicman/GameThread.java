@@ -60,6 +60,7 @@ public class GameThread extends Thread {
                 chrono.stop();
                 Intent intent = new Intent(context, ScoreActivity.class);
                 intent.putExtra("score", chrono.getTime());
+                intent.putExtra("deathCause", gameView.getLifebars().getDeathCause());
                 context.startActivity(intent);
             }
         }
