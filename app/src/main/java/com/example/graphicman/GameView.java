@@ -64,7 +64,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         gymMusic = MediaPlayer.create(context,R.raw.phonk);
         kichenMusic = MediaPlayer.create(context,R.raw.kichen);
-        bedroomMusic = MediaPlayer.create(context,R.raw.phonk);
+        bedroomMusic = MediaPlayer.create(context,R.raw.bedroom);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -144,17 +144,41 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         state = button.buttonTouch(motionEvent, state);
         switch (state) {
             case GYM:
-                bedroomMusic.pause();
-                kichenMusic.pause();
+                if(kichenMusic.isPlaying()){
+                    kichenMusic.pause();
+                }
+                if(bedroomMusic.isPlaying()){
+                    bedroomMusic.pause();
+                }
                 break;
             case BEDROOM:
-                gymMusic.pause();
-                kichenMusic.pause();
+                if(gymMusic.isPlaying()){
+                    gymMusic.pause();
+                }
+                if(kichenMusic.isPlaying()){
+                    kichenMusic.pause();
+                }
                 break;
             case KITCHEN:
-                gymMusic.pause();
-                bedroomMusic.pause();
+                if(gymMusic.isPlaying()){
+                    gymMusic.pause();
+                }
+                if(bedroomMusic.isPlaying()){
+                    bedroomMusic.pause();
+                }
                 break;
+        }
+    }
+
+    public void stopMusic(){
+        if(gymMusic.isPlaying()){
+            gymMusic.pause();
+        }
+        if(kichenMusic.isPlaying()){
+            kichenMusic.pause();
+        }
+        if(bedroomMusic.isPlaying()){
+            bedroomMusic.pause();
         }
     }
 
