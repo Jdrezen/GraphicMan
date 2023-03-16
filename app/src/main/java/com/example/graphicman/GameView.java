@@ -12,6 +12,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -19,6 +20,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
+
+import java.util.List;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private GameThread thread;
@@ -32,6 +35,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private int screenWidth;
     private Bedroom bedroom;
     private EState state;
+    private MediaPlayer gymMusic;
+    private MediaPlayer kichenMusic;
+    private MediaPlayer bedroomMusic;
     private DamageHit damageHit;
 
     public boolean isRunning() {
@@ -56,16 +62,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         state = EState.KITCHEN;
 
+        gymMusic = MediaPlayer.create(context,R.raw.phonk);
+        kichenMusic = MediaPlayer.create(context,R.raw.kichen);
+        bedroomMusic = MediaPlayer.create(context,R.raw.phonk);
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
         damageHit = new DamageHit(screenWidth, screenHeight);
-        lifebars = new LifeBars(context,100,70,70, screenHeight, screenWidth, damageHit);
-        gym = new Gym(sensorManager, lifebars, screenHeight, screenWidth);
-        kitchen = new Kitchen(sensorManager,state, lifebars, screenHeight, screenWidth);
-        bedroom = new Bedroom(sensorManager, screenHeight, screenWidth, lifebars, damageHit);
+        lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth, damageHit);
+        gym = new Gym(sensorManager, lifebars, screenHeight, screenWidth, gymMusic);
+        kitchen = new Kitchen(sensorManager,state, lifebars, screenHeight, screenWidth, kichenMusic);
+        bedroom = new Bedroom(sensorManager, screenHeight, screenWidth, lifebars, bedroomMusic, damageHit);
         button = new Button(screenHeight, screenWidth);
 
         getHolder().addCallback(this);
@@ -132,6 +142,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public void onTouch(MotionEvent motionEvent) {
         state = button.buttonTouch(motionEvent, state);
+        switch (state) {
+            case GYM:
+                bedroomMusic.pause();
+                kichenMusic.pause();
+                break;
+            case BEDROOM:
+                gymMusic.pause();
+                kichenMusic.pause();
+                break;
+            case KITCHEN:
+                gymMusic.pause();
+                bedroomMusic.pause();
+                break;
+        }
     }
 
 }

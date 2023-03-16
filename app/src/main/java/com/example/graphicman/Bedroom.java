@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 
@@ -26,9 +27,10 @@ public class Bedroom implements SensorEventListener {
     private EBedroomState bedroomState = EBedroomState.AWAKE;
     private boolean isRunning;
     private int showzzz = 0;
+    private MediaPlayer mediaPlayer;
     private DamageHit damageHit;
 
-    public Bedroom(SensorManager sensorManager, int height, int width, LifeBars lifeBars, DamageHit damageHit) {
+    public Bedroom(SensorManager sensorManager, int height, int width, LifeBars lifeBars, MediaPlayer mediaplayer, DamageHit damageHit) {
         this.height = height;
         this.width = width;
         this.barWidth = (int) (2154 * 0.02);
@@ -38,12 +40,20 @@ public class Bedroom implements SensorEventListener {
         this.canvasWrapper = new CanvasWrapper(width, height);
         this.lifeBars = lifeBars;
         this.isRunning = true;
+        this.mediaPlayer = mediaplayer;
         this.damageHit = damageHit;
 
         dificulty = 1;
     }
 
+    public void startMusic(){
+        if(!mediaPlayer.isPlaying()){
+            mediaPlayer.start();
+        }
+    }
+
     public void draw(Canvas canvas) {
+        startMusic();
         canvasWrapper.setCanvas(canvas);
 
         switch (bedroomState) {
