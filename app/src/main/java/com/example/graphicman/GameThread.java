@@ -57,6 +57,7 @@ public class GameThread extends Thread {
                 }
             }
             else {
+                gameView.stopMusic();
                 chrono.stop();
                 Intent intent = new Intent(context, ScoreActivity.class);
                 intent.putExtra("score", chrono.getTime());
