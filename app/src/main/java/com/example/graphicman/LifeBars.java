@@ -3,18 +3,10 @@ package com.example.graphicman;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.os.Handler;
-import android.util.Log;
-
-import androidx.core.content.res.ResourcesCompat;
-
-import java.util.Random;
 
 public class LifeBars {
     private int food;
@@ -25,12 +17,13 @@ public class LifeBars {
     private float ratio = 10;
     private CanvasWrapper canvasWrapper;
     private Handler timeHandler;
+    private DamageHit damageHit;
 
 
     private int barLength = 0;
     private int barWidth = 0;
 
-    public LifeBars(Context context, int food, int energy, int health, int height, int width) {
+    public LifeBars(Context context, int food, int energy, int health, int height, int width, DamageHit damageHit) {
         this.food = food;
         this.energy = energy;
         this.health = health;
@@ -42,6 +35,7 @@ public class LifeBars {
         this.canvasWrapper = new CanvasWrapper(width,height);
         this.timeHandler = new Handler();
         this.timeHandler.postDelayed(reduceLifeBars,1000);
+        this.damageHit = damageHit;
     }
 
     private Runnable reduceLifeBars = new Runnable() {
@@ -69,6 +63,7 @@ public class LifeBars {
         if((this.food + value) >= 100){
             this.food = 100;
             subHealth(5);
+            damageHit.damageHit();
         }else{
             this.food +=value;
         }
@@ -84,10 +79,12 @@ public class LifeBars {
         if((this.energy + value) >100){
             this.energy = 100;
             subHealth(1);
+            damageHit.damageHit();
         }else{
             this.energy +=value;
         }
     }
+
     public void subEnegy(int value){
         if((this.energy - value) <= 0){
             this.energy = 0;
@@ -193,6 +190,7 @@ public class LifeBars {
         drawEnergy(canvasWrapper);
         drawBars(canvasWrapper);
         drawCross(canvasWrapper);
+
     }
 
 

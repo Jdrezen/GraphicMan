@@ -26,8 +26,9 @@ public class Bedroom implements SensorEventListener {
     private EBedroomState bedroomState = EBedroomState.AWAKE;
     private boolean isRunning;
     private int showzzz = 0;
+    private DamageHit damageHit;
 
-    public Bedroom(SensorManager sensorManager, int height, int width, LifeBars lifeBars) {
+    public Bedroom(SensorManager sensorManager, int height, int width, LifeBars lifeBars, DamageHit damageHit) {
         this.height = height;
         this.width = width;
         this.barWidth = (int) (2154 * 0.02);
@@ -37,6 +38,7 @@ public class Bedroom implements SensorEventListener {
         this.canvasWrapper = new CanvasWrapper(width, height);
         this.lifeBars = lifeBars;
         this.isRunning = true;
+        this.damageHit = damageHit;
 
         dificulty = 1;
     }
@@ -271,6 +273,8 @@ public class Bedroom implements SensorEventListener {
             bedroomState = EBedroomState.ASLEEP;
         } else {
             bedroomState = EBedroomState.HORROR;
+            lifeBars.subHealth(1);
+            damageHit.damageHit();
         }
 //        bedroomState = EBedroomState.HORROR;
     }
